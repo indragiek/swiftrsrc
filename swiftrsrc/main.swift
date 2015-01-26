@@ -10,3 +10,6 @@ import Foundation
 
 println("Hello, World!")
 
+let catalog = AssetCatalog(URL: NSURL(string: "/Users/Karunaratne/Desktop/Code/Martian/Martian/Images.xcassets")!)
+println(catalog)
+
