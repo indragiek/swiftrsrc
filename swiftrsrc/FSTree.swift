@@ -8,9 +8,19 @@
 
 import Foundation
 
+func filter(tree: FSTree, f: FSTree -> Bool) -> FSTree? {
+    if tree.isLeaf {
+        return f(tree) ? tree : nil
+    }
+    let children = mapNonNil(tree.children, { filter($0, f) })
+    return FSTree(URL: tree.URL, children: children)
+}
+
 struct FSTree {
     let URL: NSURL
     let children = [FSTree]()
+    
+    var isLeaf: Bool { return children.count == 0 }
     
     init?(URL: NSURL, error: NSErrorPointer) {
         self.URL = URL
@@ -37,6 +47,11 @@ struct FSTree {
             error.memory = resourceError
             return nil
         }
+    }
+    
+    private init(URL: NSURL, children: [FSTree]) {
+        self.URL = URL
+        self.children = children
     }
 }
 

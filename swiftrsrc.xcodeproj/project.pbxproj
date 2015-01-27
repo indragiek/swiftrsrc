@@ -11,6 +11,7 @@
 		7252648B1A761075008CAFD7 /* AssetCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7252648A1A761075008CAFD7 /* AssetCatalog.swift */; };
 		725264C11A76152C008CAFD7 /* FilesystemEnumeration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725264C01A76152C008CAFD7 /* FilesystemEnumeration.swift */; };
 		726E16B41A77F35B00400E7C /* FSTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 726E16B31A77F35B00400E7C /* FSTree.swift */; };
+		728D1B0F1A7810A200279754 /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728D1B0E1A7810A200279754 /* Map.swift */; };
 		72F112951A761EBA002DA544 /* CodeGeneratorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72F112941A761EBA002DA544 /* CodeGeneratorType.swift */; };
 /* End PBXBuildFile section */
 
@@ -32,6 +33,7 @@
 		7252648A1A761075008CAFD7 /* AssetCatalog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetCatalog.swift; sourceTree = "<group>"; };
 		725264C01A76152C008CAFD7 /* FilesystemEnumeration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilesystemEnumeration.swift; sourceTree = "<group>"; };
 		726E16B31A77F35B00400E7C /* FSTree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FSTree.swift; sourceTree = "<group>"; };
+		728D1B0E1A7810A200279754 /* Map.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
 		72F112941A761EBA002DA544 /* CodeGeneratorType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodeGeneratorType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -70,6 +72,7 @@
 				725264C01A76152C008CAFD7 /* FilesystemEnumeration.swift */,
 				72F112941A761EBA002DA544 /* CodeGeneratorType.swift */,
 				726E16B31A77F35B00400E7C /* FSTree.swift */,
+				728D1B0E1A7810A200279754 /* Map.swift */,
 			);
 			path = swiftrsrc;
 			sourceTree = "<group>";
@@ -130,6 +133,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				728D1B0F1A7810A200279754 /* Map.swift in Sources */,
 				725264C11A76152C008CAFD7 /* FilesystemEnumeration.swift in Sources */,
 				7252648B1A761075008CAFD7 /* AssetCatalog.swift in Sources */,
 				72F112951A761EBA002DA544 /* CodeGeneratorType.swift in Sources */,
