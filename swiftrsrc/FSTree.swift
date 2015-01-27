@@ -12,7 +12,7 @@ func filter(tree: FSTree, f: FSTree -> Bool) -> FSTree? {
     if tree.isLeaf {
         return f(tree) ? tree : nil
     }
-    let children = mapNonNil(tree.children, { filter($0, f) })
+    let children = mapSome(tree.children, { filter($0, f) })
     return FSTree(URL: tree.URL, children: children)
 }
 
@@ -20,7 +20,7 @@ func pruneEmptyDirectories(tree: FSTree) -> FSTree? {
     if tree.isLeaf {
         return (tree.URL.isDirectory(error: nil) ?? false) ? nil : tree
     }
-    let children = mapNonNil(tree.children, { pruneEmptyDirectories($0) })
+    let children = mapSome(tree.children, { pruneEmptyDirectories($0) })
     if children.count != 0 {
         return FSTree(URL: tree.URL, children: children)
     }
@@ -40,7 +40,7 @@ struct FSTree {
             var contentsError: NSError?
             let fm = NSFileManager.defaultManager()
             if let contents = fm.contentsOfDirectoryAtURL(URL, includingPropertiesForKeys: [NSURLIsDirectoryKey], options: nil, error: &contentsError) as? [NSURL] {
-                self.children = mapNonNil(contents, { FSTree(URL: $0, error: nil) })
+                self.children = mapSome(contents, { FSTree(URL: $0, error: nil) })
             } else if error != nil {
                 error.memory = contentsError
                 return nil
