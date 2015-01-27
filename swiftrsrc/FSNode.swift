@@ -12,7 +12,7 @@ struct FSNode {
     let URL: NSURL
     let children = [FSNode]()
     
-    init(URL: NSURL) {
+    init?(URL: NSURL, error: NSErrorPointer) {
         self.URL = URL
         var resourceError: NSError?
         var isDirectory: AnyObject?
@@ -21,13 +21,21 @@ struct FSNode {
                 var contentsError: NSError?
                 let fm = NSFileManager.defaultManager()
                 if let contents = fm.contentsOfDirectoryAtURL(URL, includingPropertiesForKeys: [NSURLIsDirectoryKey], options: nil, error: &contentsError) as? [NSURL] {
-                    children = contents.map { FSNode(URL: $0) }
-                } else {
-                    fputs("Error getting contents in directory \(URL): \(contentsError)", stderr)
+                    var children = [FSNode]()
+                    for URL in contents {
+                        if let node = FSNode(URL: URL, error: nil) {
+                            children.append(node)
+                        }
+                    }
+                    self.children = children
+                } else if error != nil {
+                    error.memory = contentsError
+                    return nil
                 }
             }
-        } else {
-            fputs("Error getting resource value for URL \(URL): \(resourceError)", stderr)
+        } else if error != nil {
+            error.memory = resourceError
+            return nil
         }
     }
 }
