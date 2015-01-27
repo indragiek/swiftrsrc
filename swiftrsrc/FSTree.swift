@@ -8,25 +8,6 @@
 
 import Foundation
 
-func filter(tree: FSTree, f: FSTree -> Bool) -> FSTree? {
-    if tree.isLeaf {
-        return f(tree) ? tree : nil
-    }
-    let children = mapSome(tree.children, { filter($0, f) })
-    return FSTree(URL: tree.URL, children: children)
-}
-
-func pruneEmptyDirectories(tree: FSTree) -> FSTree? {
-    if tree.isLeaf {
-        return (tree.URL.isDirectory(error: nil) ?? false) ? nil : tree
-    }
-    let children = mapSome(tree.children, { pruneEmptyDirectories($0) })
-    if children.count != 0 {
-        return FSTree(URL: tree.URL, children: children)
-    }
-    return nil
-}
-
 struct FSTree {
     let URL: NSURL
     let children = [FSTree]()
@@ -55,6 +36,33 @@ struct FSTree {
         self.URL = URL
         self.children = children
     }
+    
+    func filter(f: FSTree -> Bool) -> FSTree? {
+        return _filter(self, f)
+    }
+    
+    func pruneEmptyDirectories() -> FSTree? {
+        return _pruneEmptyDirectories(self)
+    }
+}
+
+private func _filter(tree: FSTree, f: FSTree -> Bool) -> FSTree? {
+    if tree.isLeaf {
+        return f(tree) ? tree : nil
+    }
+    let children = mapSome(tree.children, { _filter($0, f) })
+    return FSTree(URL: tree.URL, children: children)
+}
+
+private func _pruneEmptyDirectories(tree: FSTree) -> FSTree? {
+    if tree.isLeaf {
+        return (tree.URL.isDirectory(error: nil) ?? false) ? nil : tree
+    }
+    let children = mapSome(tree.children, { _pruneEmptyDirectories($0) })
+    if children.count != 0 {
+        return FSTree(URL: tree.URL, children: children)
+    }
+    return nil
 }
 
 extension FSTree: Printable {
@@ -74,7 +82,7 @@ extension FSTree: Printable {
     }
 }
 
-extension NSURL {
+private extension NSURL {
     func isDirectory(#error: NSErrorPointer) -> Bool? {
         var isDirectory: AnyObject?
         if getResourceValue(&isDirectory, forKey: NSURLIsDirectoryKey, error: error) {
