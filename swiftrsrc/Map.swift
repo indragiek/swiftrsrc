@@ -7,12 +7,11 @@
 //
 
 func mapNonNil<S: SequenceType, T>(source: S, transform: S.Generator.Element -> T?) -> [T] {
-    return reduce(source, []) {
-        if let x = transform($1) {
-            var collection = $0
+    return reduce(source, []) { (var collection, element) in
+        if let x = transform(element) {
             collection.append(x)
             return collection
         }
-        return $0
+        return collection
     }
 }

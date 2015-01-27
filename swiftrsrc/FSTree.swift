@@ -16,6 +16,17 @@ func filter(tree: FSTree, f: FSTree -> Bool) -> FSTree? {
     return FSTree(URL: tree.URL, children: children)
 }
 
+func pruneEmptyDirectories(tree: FSTree) -> FSTree? {
+    if tree.isLeaf {
+        return (tree.URL.isDirectory(error: nil) ?? false) ? nil : tree
+    }
+    let children = mapNonNil(tree.children, { pruneEmptyDirectories($0) })
+    if children.count != 0 {
+        return FSTree(URL: tree.URL, children: children)
+    }
+    return nil
+}
+
 struct FSTree {
     let URL: NSURL
     let children = [FSTree]()
@@ -26,22 +37,20 @@ struct FSTree {
         self.URL = URL
         var resourceError: NSError?
         var isDirectory: AnyObject?
-        if URL.getResourceValue(&isDirectory, forKey: NSURLIsDirectoryKey, error: &resourceError) {
-            if (isDirectory as NSNumber).boolValue {
-                var contentsError: NSError?
-                let fm = NSFileManager.defaultManager()
-                if let contents = fm.contentsOfDirectoryAtURL(URL, includingPropertiesForKeys: [NSURLIsDirectoryKey], options: nil, error: &contentsError) as? [NSURL] {
-                    var children = [FSTree]()
-                    for URL in contents {
-                        if let node = FSTree(URL: URL, error: nil) {
-                            children.append(node)
-                        }
+        if let isDirectory = URL.isDirectory(error: &resourceError) {
+            var contentsError: NSError?
+            let fm = NSFileManager.defaultManager()
+            if let contents = fm.contentsOfDirectoryAtURL(URL, includingPropertiesForKeys: [NSURLIsDirectoryKey], options: nil, error: &contentsError) as? [NSURL] {
+                var children = [FSTree]()
+                for URL in contents {
+                    if let node = FSTree(URL: URL, error: nil) {
+                        children.append(node)
                     }
-                    self.children = children
-                } else if error != nil {
-                    error.memory = contentsError
-                    return nil
                 }
+                self.children = children
+            } else if error != nil {
+                error.memory = contentsError
+                return nil
             }
         } else if error != nil {
             error.memory = resourceError
@@ -69,5 +78,15 @@ extension FSTree: Printable {
         }
         desc += "}"
         return desc
+    }
+}
+
+extension NSURL {
+    func isDirectory(#error: NSErrorPointer) -> Bool? {
+        var isDirectory: AnyObject?
+        if getResourceValue(&isDirectory, forKey: NSURLIsDirectoryKey, error: error) {
+            return (isDirectory as NSNumber).boolValue
+        }
+        return nil
     }
 }
