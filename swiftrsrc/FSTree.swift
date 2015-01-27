@@ -36,18 +36,11 @@ struct FSTree {
     init?(URL: NSURL, error: NSErrorPointer) {
         self.URL = URL
         var resourceError: NSError?
-        var isDirectory: AnyObject?
         if let isDirectory = URL.isDirectory(error: &resourceError) {
             var contentsError: NSError?
             let fm = NSFileManager.defaultManager()
             if let contents = fm.contentsOfDirectoryAtURL(URL, includingPropertiesForKeys: [NSURLIsDirectoryKey], options: nil, error: &contentsError) as? [NSURL] {
-                var children = [FSTree]()
-                for URL in contents {
-                    if let node = FSTree(URL: URL, error: nil) {
-                        children.append(node)
-                    }
-                }
-                self.children = children
+                self.children = mapNonNil(contents, { FSTree(URL: $0, error: nil) })
             } else if error != nil {
                 error.memory = contentsError
                 return nil
