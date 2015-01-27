@@ -1,5 +1,5 @@
 //
-//  FSNode.swift
+//  FSTree.swift
 //  swiftrsrc
 //
 //  Created by Indragie on 1/27/15.
@@ -8,9 +8,9 @@
 
 import Foundation
 
-struct FSNode {
+struct FSTree {
     let URL: NSURL
-    let children = [FSNode]()
+    let children = [FSTree]()
     
     init?(URL: NSURL, error: NSErrorPointer) {
         self.URL = URL
@@ -21,9 +21,9 @@ struct FSNode {
                 var contentsError: NSError?
                 let fm = NSFileManager.defaultManager()
                 if let contents = fm.contentsOfDirectoryAtURL(URL, includingPropertiesForKeys: [NSURLIsDirectoryKey], options: nil, error: &contentsError) as? [NSURL] {
-                    var children = [FSNode]()
+                    var children = [FSTree]()
                     for URL in contents {
-                        if let node = FSNode(URL: URL, error: nil) {
+                        if let node = FSTree(URL: URL, error: nil) {
                             children.append(node)
                         }
                     }
@@ -40,13 +40,13 @@ struct FSNode {
     }
 }
 
-extension FSNode: Printable {
+extension FSTree: Printable {
     var description: String {
         return recursiveDescription(0)
     }
     
     private func recursiveDescription(level: Int) -> String {
-        var desc = "FSNode{URL=\(URL), children="
+        var desc = "FSTree{URL=\(URL), children="
         for node in children {
             desc += "\n"
             for i in 0..<level { desc += "\t" }
