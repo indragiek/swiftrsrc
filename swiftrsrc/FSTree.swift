@@ -8,12 +8,19 @@
 
 import Foundation
 
+/// Represents a filesystem tree
 struct FSTree {
     let URL: NSURL
     let children = [FSTree]()
     
+    /// Leaf in the strict sense -- it is possible for a directory to
+    /// be a leaf node if it is empty.
     var isLeaf: Bool { return children.count == 0 }
     
+    var isDirectory: Bool { return URL.isDirectory(error: nil) ?? false }
+    
+    /// Failable initializer that will return `nil` if the file manager
+    /// fails to get information for the specified URL.
     init?(URL: NSURL, error: NSErrorPointer) {
         self.URL = URL
         var resourceError: NSError?
@@ -37,10 +44,14 @@ struct FSTree {
         self.children = children
     }
     
+    /// Returns a new tree by recursively filtering all child nodes of the
+    /// root node using the specified function.
     func filter(f: FSTree -> Bool) -> FSTree {
         return _filter(self, f, 0)!
     }
     
+    /// Returns a new tree by recursively removing all child nodes of the root
+    /// node that represent an empty directory.
     func pruneEmptyDirectories() -> FSTree {
         return _pruneEmptyDirectories(self, 0)!
     }
@@ -54,8 +65,7 @@ private func _filter(tree: FSTree, f: FSTree -> Bool, level: Int) -> FSTree? {
 
 private func _pruneEmptyDirectories(tree: FSTree, level: Int) -> FSTree? {
     if tree.isLeaf {
-        let isDirectory = tree.URL.isDirectory(error: nil) ?? false
-        return (level == 0) ? tree : (isDirectory ? nil : tree)
+        return (level == 0) ? tree : (tree.isDirectory ? nil : tree)
     }
     let children = mapSome(tree.children, { _pruneEmptyDirectories($0, level + 1) })
     if level == 0 || children.count != 0 {
