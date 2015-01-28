@@ -37,29 +37,28 @@ struct FSTree {
         self.children = children
     }
     
-    func filter(f: FSTree -> Bool) -> FSTree? {
-        return _filter(self, f)
+    func filter(f: FSTree -> Bool) -> FSTree {
+        return _filter(self, f, 0)!
     }
     
-    func pruneEmptyDirectories() -> FSTree? {
-        return _pruneEmptyDirectories(self)
+    func pruneEmptyDirectories() -> FSTree {
+        return _pruneEmptyDirectories(self, 0)!
     }
 }
 
-private func _filter(tree: FSTree, f: FSTree -> Bool) -> FSTree? {
-    if tree.isLeaf {
-        return f(tree) ? tree : nil
-    }
-    let children = mapSome(tree.children, { _filter($0, f) })
+private func _filter(tree: FSTree, f: FSTree -> Bool, level: Int) -> FSTree? {
+    if (level != 0 && !f(tree)) { return nil }
+    let children = mapSome(tree.children, { _filter($0, f, level + 1) })
     return FSTree(URL: tree.URL, children: children)
 }
 
-private func _pruneEmptyDirectories(tree: FSTree) -> FSTree? {
+private func _pruneEmptyDirectories(tree: FSTree, level: Int) -> FSTree? {
     if tree.isLeaf {
-        return (tree.URL.isDirectory(error: nil) ?? false) ? nil : tree
+        let isDirectory = tree.URL.isDirectory(error: nil) ?? false
+        return (level == 0) ? tree : (isDirectory ? nil : tree)
     }
-    let children = mapSome(tree.children, { _pruneEmptyDirectories($0) })
-    if children.count != 0 {
+    let children = mapSome(tree.children, { _pruneEmptyDirectories($0, level + 1) })
+    if level == 0 || children.count != 0 {
         return FSTree(URL: tree.URL, children: children)
     }
     return nil
