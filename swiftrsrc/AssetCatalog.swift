@@ -46,10 +46,10 @@ extension AssetCatalog: CodeGeneratorType {
 
 private func _generateCode(tree: FSTree, level: Int) -> String {
     let name = tree.URL.fileName!
-    let indentNewline: (String) -> String = { $0.indent(level) + "\n" }
+    let indentNewline: String -> String = { $0.indent(level) + "\n" }
     
     if tree.URL.pathExtension == ImagesetFileExtension {
-        return indentNewline("static let \(name) = UIImage(named: \"\(name)\")")
+        return indentNewline("static var \(name): UIImage { return UIImage(named: \"\(name)\")! }")
     } else {
         var code = ""
         code += indentNewline("struct \(name) {")
@@ -64,4 +64,3 @@ private extension NSURL {
         return lastPathComponent?.stringByDeletingPathExtension
     }
 }
-
