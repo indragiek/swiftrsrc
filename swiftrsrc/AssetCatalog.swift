@@ -75,15 +75,16 @@ extension AssetCatalog: CodeGeneratorType {
 }
 
 private func _generateCode(nested: Bool, tree: FSTree, level: Int) -> String {
-    let name = tree.URL.fileName!
+    let imageName = tree.URL.fileName!
+    let normalizedName = imageName.camelCaseString.alphanumericString
     let indentNewline: String -> String = { $0.indent(level) + "\n" }
     
     if tree.URL.pathExtension == ImagesetFileExtension {
-        return indentNewline("static var \(name): UIImage { return UIImage(named: \"\(name)\")! }")
+        return indentNewline("static var \(normalizedName): UIImage { return UIImage(named: \"\(name)\")! }")
     } else {
         var code = ""
         if level == 0 || nested {
-            code += indentNewline("struct \(name) {")
+            code += indentNewline("struct \(normalizedName) {")
             code += reduce(tree.children, "", { $0 + _generateCode(nested, $1, level + 1) })
             code += indentNewline("}")
         } else {

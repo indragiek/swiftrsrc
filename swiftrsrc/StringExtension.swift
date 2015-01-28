@@ -18,4 +18,17 @@ extension String {
         }
         return "\n".join(indentedLines)
     }
+    
+    var camelCaseString: String {
+        struct Cached {
+            static var CamelCaseCharacterSet = NSCharacterSet(charactersInString: ".-_ ")
+        }
+        let components = componentsSeparatedByCharactersInSet(Cached.CamelCaseCharacterSet)
+        return "".join(components.map({ $0.capitalizedString }))
+    }
+    
+    var alphanumericString: String {
+        let components = componentsSeparatedByCharactersInSet(NSCharacterSet.alphanumericCharacterSet().invertedSet)
+        return "".join(components)
+    }
 }
