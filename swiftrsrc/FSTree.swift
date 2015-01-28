@@ -19,8 +19,7 @@ struct FSTree {
     
     var isDirectory: Bool { return URL.isDirectory(error: nil) ?? false }
     
-    /// Failable initializer that will return `nil` if the file manager
-    /// fails to get information for the specified URL.
+    /// Failable initializer that returns `nil` if the URL cannot be accessed.
     init?(URL: NSURL, error: NSErrorPointer) {
         self.URL = URL
         var resourceError: NSError?

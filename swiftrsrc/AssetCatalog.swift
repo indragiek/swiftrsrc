@@ -9,45 +9,29 @@
 import Foundation
 
 /// Xcode asset catalog (*.xcassets)
-struct AssetCatalog: Printable {
-    
-    /// Image set contained within an asset catalog (*.imageset)
-    struct ImageSet: Printable {
-        let URL: NSURL
-        let name: String
-        
-        init(URL: NSURL) {
-            self.URL = URL
-            self.name = URL.lastPathComponent!.stringByDeletingPathExtension
-        }
-        
-        // MARK: Printable
-        
-        var description: String {
-            return "ImageSet{name=\(name), URL=\(URL)}"
-        }
-    }
-    
+struct AssetCatalog {
     let URL: NSURL
     let name: String
-    let imageSets: [ImageSet]
+    private let tree: FSTree
     
-    init(URL: NSURL) {
+    /// Failable initializer that returns `nil` if the URL cannot be accessed.
+    init?(URL: NSURL, error: NSErrorPointer) {
         self.URL = URL
         self.name = URL.lastPathComponent!.stringByDeletingPathExtension
-        
-        var imageSets = [ImageSet]()
-        for URL in contentsOfURL(URL, options: .SkipsHiddenFiles) {
-            if URL.pathExtension! == "imageset" {
-                imageSets.append(ImageSet(URL: URL))
-            }
+        if let tree = FSTree(URL: URL, error: error) {
+            self.tree = tree.filter { node in
+                if node.isLeaf { return false }
+                let ext = node.URL.pathExtension
+                return ext == nil || countElements(ext!) == 0 || ext == "imageset"
+            }.pruneEmptyDirectories()
+        } else {
+            return nil
         }
-        self.imageSets = imageSets
     }
-    
-    // MARK: Printable
-    
+}
+
+extension AssetCatalog: Printable {
     var description: String {
-        return "AssetCatalog{name=\(name), URL=\(URL), imageSets=\(imageSets)"
+        return "AssetCatalog{name=\(name), URL=\(URL)}"
     }
 }
