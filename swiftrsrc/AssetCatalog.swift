@@ -22,7 +22,7 @@ struct AssetCatalog {
             self.tree = tree.filter { node in
                 if node.isLeaf { return false }
                 let ext = node.URL.pathExtension
-                return ext == nil || countElements(ext!) == 0 || ext == ImagesetFileExtension
+                return ext == nil || countElements(ext!) == 0 || isValidImageSet(tree: node)
             }
             self.URL = URL
             self.name = URL.fileName!
@@ -32,11 +32,27 @@ struct AssetCatalog {
     }
 }
 
+private func isValidImageSet(#tree: FSTree) -> Bool {
+    if (tree.URL.pathExtension == ImagesetFileExtension) {
+        return elementPassingTest(tree.children, { $0.URL.lastPathComponent == "Contents.json" })
+                    .chainMap({ $0.URL })
+                    .chainMap({ NSData(contentsOfURL: $0) })
+                    .chainMap({ NSJSONSerialization.JSONObjectWithData($0, options: .allZeros, error: nil) as? NSDictionary })
+                    .chainMap({ $0["images"] as? [NSDictionary] })
+                    .chainMap({ elementPassingTest($0, { $0["filename"] != nil }) }) != nil
+    }
+    return false
+}
+
+// MARK: Printable
+
 extension AssetCatalog: Printable {
     var description: String {
         return "AssetCatalog{name=\(name), URL=\(URL)}"
     }
 }
+
+// MARK: CodeGeneratorType
 
 extension AssetCatalog: CodeGeneratorType {
     func generateCode() -> String {
