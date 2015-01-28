@@ -92,9 +92,3 @@ private func _generateCode(nested: Bool, tree: FSTree, level: Int) -> String {
         return code
     }
 }
-
-private extension NSURL {
-    var fileName: String? {
-        return lastPathComponent?.stringByDeletingPathExtension
-    }
-}

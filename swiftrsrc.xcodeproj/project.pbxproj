@@ -15,6 +15,7 @@
 		72807E531A794BB30066BAAE /* Optional.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72807E521A794BB30066BAAE /* Optional.swift */; };
 		728D1B0F1A7810A200279754 /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728D1B0E1A7810A200279754 /* Map.swift */; };
 		72F112951A761EBA002DA544 /* CodeGeneratorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72F112941A761EBA002DA544 /* CodeGeneratorType.swift */; };
+		72FAC0A31A7971F200D25200 /* NSURLExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72FAC0A21A7971F200D25200 /* NSURLExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -39,6 +40,7 @@
 		72807E521A794BB30066BAAE /* Optional.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Optional.swift; sourceTree = "<group>"; };
 		728D1B0E1A7810A200279754 /* Map.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
 		72F112941A761EBA002DA544 /* CodeGeneratorType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodeGeneratorType.swift; sourceTree = "<group>"; };
+		72FAC0A21A7971F200D25200 /* NSURLExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSURLExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,8 +79,9 @@
 				726E16B31A77F35B00400E7C /* FSTree.swift */,
 				728D1B0E1A7810A200279754 /* Map.swift */,
 				72807E521A794BB30066BAAE /* Optional.swift */,
-				7267FDF81A78AF83003F173B /* StringExtension.swift */,
 				72807E501A79438F0066BAAE /* SequenceOperations.swift */,
+				7267FDF81A78AF83003F173B /* StringExtension.swift */,
+				72FAC0A21A7971F200D25200 /* NSURLExtension.swift */,
 			);
 			path = swiftrsrc;
 			sourceTree = "<group>";
@@ -146,6 +149,7 @@
 				72F112951A761EBA002DA544 /* CodeGeneratorType.swift in Sources */,
 				725264841A76097B008CAFD7 /* main.swift in Sources */,
 				726E16B41A77F35B00400E7C /* FSTree.swift in Sources */,
+				72FAC0A31A7971F200D25200 /* NSURLExtension.swift in Sources */,
 				72807E531A794BB30066BAAE /* Optional.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
