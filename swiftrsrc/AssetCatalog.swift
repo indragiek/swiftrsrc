@@ -34,12 +34,26 @@ struct AssetCatalog {
 
 private func isValidImageSet(#tree: FSTree) -> Bool {
     if (tree.URL.pathExtension == ImagesetFileExtension) {
-        return elementPassingTest(tree.children) { $0.URL.lastPathComponent == "Contents.json" }
+        /* Originally written as:
+        
+           return elementPassingTest(tree.children) { $0.URL.lastPathComponent == "Contents.json" }
                     .chainMap { $0.URL }
                     .chainMap { NSData(contentsOfURL: $0) }
                     .chainMap { NSJSONSerialization.JSONObjectWithData($0, options: .allZeros, error: nil) as? NSDictionary }
                     .chainMap { $0["images"] as? [NSDictionary] }
                     .chainMap { elementPassingTest($0) { $0["filename"] != nil } } != nil
+        
+          This kills the compiler/indexer. (Xcode 6.1.1, Swift 1.1)
+        */
+        if let contentsURL = elementPassingTest(tree.children, { $0.URL.lastPathComponent == "Contents.json" })?.URL {
+            if let data = NSData(contentsOfURL: contentsURL) {
+                if let JSON = NSJSONSerialization.JSONObjectWithData(data, options: .allZeros, error: nil) as? NSDictionary {
+                    if let images = JSON["images"] as? [NSDictionary] {
+                        return elementPassingTest(images, { $0["filename"] != nil }) != nil
+                    }
+                }
+            }
+        }
     }
     return false
 }
