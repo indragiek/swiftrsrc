@@ -8,5 +8,5 @@
 
 /// A type that can generate Swift source code
 protocol CodeGeneratorType {
-    func generateCode() -> String
+    func generateCode(#nested: Bool) -> String
 }

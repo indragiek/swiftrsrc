@@ -55,12 +55,12 @@ extension AssetCatalog: Printable {
 // MARK: CodeGeneratorType
 
 extension AssetCatalog: CodeGeneratorType {
-    func generateCode() -> String {
-        return _generateCode(tree, 0)
+    func generateCode(#nested: Bool) -> String {
+        return _generateCode(nested, tree, 0)
     }
 }
 
-private func _generateCode(tree: FSTree, level: Int) -> String {
+private func _generateCode(nested: Bool, tree: FSTree, level: Int) -> String {
     let name = tree.URL.fileName!
     let indentNewline: String -> String = { $0.indent(level) + "\n" }
     
@@ -68,9 +68,13 @@ private func _generateCode(tree: FSTree, level: Int) -> String {
         return indentNewline("static var \(name): UIImage { return UIImage(named: \"\(name)\")! }")
     } else {
         var code = ""
-        code += indentNewline("struct \(name) {")
-        code += reduce(tree.children, "", { $0 + _generateCode($1, level + 1) })
-        code += indentNewline("}")
+        if level == 0 || nested {
+            code += indentNewline("struct \(name) {")
+            code += reduce(tree.children, "", { $0 + _generateCode(nested, $1, level + 1) })
+            code += indentNewline("}")
+        } else {
+            code += reduce(tree.children, "", { $0 + _generateCode(nested, $1, level) })
+        }
         return code
     }
 }
