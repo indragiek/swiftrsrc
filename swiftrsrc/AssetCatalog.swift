@@ -75,8 +75,8 @@ extension AssetCatalog: CodeGeneratorType {
 }
 
 private func _generateCode(nested: Bool, tree: FSTree, level: Int) -> String {
-    let imageName = tree.URL.fileName!
-    let normalizedName = imageName.camelCaseString.alphanumericString
+    let name = tree.URL.fileName!
+    let normalizedName = name.camelCaseString.alphanumericString
     let indentNewline: String -> String = { $0.indent(level) + "\n" }
     
     if tree.URL.pathExtension == ImagesetFileExtension {
