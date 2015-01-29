@@ -69,12 +69,12 @@ extension AssetCatalog: Printable {
 // MARK: CodeGeneratorType
 
 extension AssetCatalog: CodeGeneratorType {
-    func generateCode(#nested: Bool) -> String {
-        return _generateCode(nested, tree, 0)
+    func generateCode() -> String {
+        return _generateCode(tree, 0)
     }
 }
 
-private func _generateCode(nested: Bool, tree: FSTree, level: Int) -> String {
+private func _generateCode(tree: FSTree, level: Int) -> String {
     let name = tree.URL.fileName!
     let camelCaseName = name.camelCaseString
     let indentNewline: String -> String = { $0.indent(level) + "\n" }
@@ -82,14 +82,9 @@ private func _generateCode(nested: Bool, tree: FSTree, level: Int) -> String {
     if tree.URL.pathExtension == ImagesetFileExtension {
         return indentNewline("static var \(camelCaseName): UIImage { return UIImage(named: \"\(name)\")! }")
     } else {
-        var code = ""
-        if level == 0 || nested {
-            code += indentNewline("struct \(camelCaseName) {")
-            code += reduce(tree.children, "", { $0 + _generateCode(nested, $1, level + 1) })
-            code += indentNewline("}")
-        } else {
-            code += reduce(tree.children, "", { $0 + _generateCode(nested, $1, level) })
-        }
+        var code = indentNewline("struct \(camelCaseName) {")
+        code += reduce(tree.children, "", { $0 + _generateCode($1, level + 1) })
+        code += indentNewline("}")
         return code
     }
 }

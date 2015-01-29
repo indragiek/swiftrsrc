@@ -36,7 +36,7 @@ extension ColorList: Printable {
 // MARK: CodeGeneratorType
 
 extension ColorList: CodeGeneratorType {
-    func generateCode(#nested: Bool) -> String {
+    func generateCode() -> String {
         var code = "struct \(name.camelCaseString) {\n"
         for key in list.allKeys as [String] {
             if let colorString = list.colorWithKey(key)?.UIColorString {

@@ -36,7 +36,7 @@ extension Storyboard: Printable {
 // MARK: CodeGeneratorType
 
 extension Storyboard: CodeGeneratorType {
-    func generateCode(#nested: Bool) -> String {
+    func generateCode() -> String {
         let stringsForXPath: String -> [String] = {
             let nodes = self.document.nodesForXPath($0, error: nil) as [NSXMLNode]
             return mapSome(nodes, { $0.stringValue })
@@ -51,24 +51,17 @@ extension Storyboard: CodeGeneratorType {
         let segueIdentifiers = stringsForXPath("//segue/@identifier")
         
         var code = "struct \(name.camelCaseString) {\n"
-        if nested {
-            let categories = [
-                ("StoryboardIdentifiers", storyboardIdentifiers),
-                ("ReuseIdentifiers", reuseIdentifiers),
-                ("SegueIdentifiers", segueIdentifiers)
-            ]
-            for (name, identifiers) in categories {
-                code += "\tstruct \(name)\n"
-                for id in identifiers {
-                    code += "\t\t" + constantDeclaration(id)
-                }
-                code += "\t}\n"
+        let categories = [
+            ("StoryboardIdentifiers", storyboardIdentifiers),
+            ("ReuseIdentifiers", reuseIdentifiers),
+            ("SegueIdentifiers", segueIdentifiers)
+        ]
+        for (name, identifiers) in categories {
+            code += "\tstruct \(name)\n"
+            for id in identifiers {
+                code += "\t\tstatic let \(id.camelCaseString) = \"\(id)\"\n"
             }
-        } else {
-            let allIdentifiers = storyboardIdentifiers + reuseIdentifiers + segueIdentifiers
-            for id in allIdentifiers {
-                code += "\t" + constantDeclaration(id)
-            }
+            code += "\t}\n"
         }
         code += "}"
         return code
