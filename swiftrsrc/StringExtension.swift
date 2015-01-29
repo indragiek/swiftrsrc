@@ -19,17 +19,26 @@ extension String {
         return "\n".join(indentedLines)
     }
     
-    func stringByRemovingCharactersInSet(set: NSCharacterSet) -> String {
-        let components = componentsSeparatedByCharactersInSet(set)
-        return "".join(components)
-    }
-    
     var camelCaseString: String {
         struct Cached {
             static var CamelCaseCharacterSet = NSCharacterSet(charactersInString: ".-_ ")
         }
         let components = componentsSeparatedByCharactersInSet(Cached.CamelCaseCharacterSet)
-        let camelCaseString = "".join(components.map({ $0.capitalizedString }))
+        let camelCaseString = "".join(components.map({ $0.firstLetterCapitalizedString }))
         return camelCaseString.stringByRemovingCharactersInSet(NSCharacterSet.alphanumericCharacterSet().invertedSet)
+    }
+    
+    private func stringByRemovingCharactersInSet(set: NSCharacterSet) -> String {
+        let components = componentsSeparatedByCharactersInSet(set)
+        return "".join(components)
+    }
+    
+    private var firstLetterCapitalizedString: String {
+        if countElements(self) == 0 { return self }
+        
+        let index = advance(startIndex, 1)
+        let capitalized = substringToIndex(index).uppercaseString
+        let rest = substringFromIndex(index)
+        return capitalized + rest
     }
 }
