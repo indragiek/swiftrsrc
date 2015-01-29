@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		720FDA8B1A79D3BE009698A3 /* ColorFormatting.m in Sources */ = {isa = PBXBuildFile; fileRef = 720FDA8A1A79D3BE009698A3 /* ColorFormatting.m */; };
 		725264841A76097B008CAFD7 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725264831A76097B008CAFD7 /* main.swift */; };
 		7252648B1A761075008CAFD7 /* AssetCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7252648A1A761075008CAFD7 /* AssetCatalog.swift */; };
 		7267FDF91A78AF83003F173B /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7267FDF81A78AF83003F173B /* StringExtension.swift */; };
@@ -33,9 +32,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		720FDA881A79D3BE009698A3 /* swiftrsrc-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "swiftrsrc-Bridging-Header.h"; sourceTree = "<group>"; };
-		720FDA891A79D3BE009698A3 /* ColorFormatting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorFormatting.h; sourceTree = "<group>"; };
-		720FDA8A1A79D3BE009698A3 /* ColorFormatting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorFormatting.m; sourceTree = "<group>"; };
 		725264801A76097B008CAFD7 /* swiftrsrc */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = swiftrsrc; sourceTree = BUILT_PRODUCTS_DIR; };
 		725264831A76097B008CAFD7 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		7252648A1A761075008CAFD7 /* AssetCatalog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetCatalog.swift; sourceTree = "<group>"; };
@@ -89,9 +85,6 @@
 				72807E501A79438F0066BAAE /* SequenceOperations.swift */,
 				7267FDF81A78AF83003F173B /* StringExtension.swift */,
 				72FAC0A21A7971F200D25200 /* NSURLExtension.swift */,
-				720FDA891A79D3BE009698A3 /* ColorFormatting.h */,
-				720FDA8A1A79D3BE009698A3 /* ColorFormatting.m */,
-				720FDA881A79D3BE009698A3 /* swiftrsrc-Bridging-Header.h */,
 			);
 			path = swiftrsrc;
 			sourceTree = "<group>";
@@ -162,7 +155,6 @@
 				726E16B41A77F35B00400E7C /* FSTree.swift in Sources */,
 				72FAC0A31A7971F200D25200 /* NSURLExtension.swift in Sources */,
 				72807E531A794BB30066BAAE /* Optional.swift in Sources */,
-				720FDA8B1A79D3BE009698A3 /* ColorFormatting.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -247,21 +239,14 @@
 		725264881A76097B008CAFD7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "swiftrsrc/swiftrsrc-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		725264891A76097B008CAFD7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "swiftrsrc/swiftrsrc-Bridging-Header.h";
 			};
 			name = Release;
 		};
