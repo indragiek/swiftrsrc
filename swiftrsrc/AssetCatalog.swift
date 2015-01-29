@@ -69,21 +69,28 @@ extension AssetCatalog: Printable {
 // MARK: CodeGeneratorType
 
 extension AssetCatalog: CodeGeneratorType {
-    func generateCode() -> String {
-        return _generateCode(tree, 0)
+    func generateCode(#platform: Platform) -> String {
+        return _generateCode(platform, tree, 0)
     }
 }
 
-private func _generateCode(tree: FSTree, level: Int) -> String {
+private func _generateCode(platform: Platform, tree: FSTree, level: Int) -> String {
     let name = tree.URL.fileName!
     let camelCaseName = name.camelCaseString
+    let imageClass: String = {
+        switch platform {
+        case .iOS: return "UIImage"
+        case .OSX: return "NSImage"
+        }
+    }()
+    
     let indentNewline: String -> String = { $0.indent(level) + "\n" }
     
     if tree.URL.pathExtension == ImagesetFileExtension {
-        return indentNewline("static var \(camelCaseName): UIImage { return UIImage(named: \"\(name)\")! }")
+        return indentNewline("static var \(camelCaseName): \(imageClass) { return \(imageClass)(named: \"\(name)\")! }")
     } else {
         var code = indentNewline("struct \(camelCaseName) {")
-        code += reduce(tree.children, "", { $0 + _generateCode($1, level + 1) })
+        code += reduce(tree.children, "", { $0 + _generateCode(platform, $1, level + 1) })
         code += indentNewline("}")
         return code
     }

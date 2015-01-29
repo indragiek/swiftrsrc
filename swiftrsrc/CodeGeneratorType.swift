@@ -6,7 +6,12 @@
 //  Copyright (c) 2015 Indragie Karunaratne. All rights reserved.
 //
 
+enum Platform {
+    case iOS
+    case OSX
+}
+
 /// A type that can generate Swift source code
 protocol CodeGeneratorType {
-    func generateCode() -> String
+    func generateCode(#platform: Platform) -> String
 }

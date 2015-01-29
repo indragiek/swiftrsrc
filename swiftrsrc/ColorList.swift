@@ -36,10 +36,10 @@ extension ColorList: Printable {
 // MARK: CodeGeneratorType
 
 extension ColorList: CodeGeneratorType {
-    func generateCode() -> String {
+    func generateCode(#platform: Platform) -> String {
         var code = "struct \(name.camelCaseString) {\n"
         for key in list.allKeys as [String] {
-            if let colorString = list.colorWithKey(key)?.UIColorString {
+            if let colorString = list.colorWithKey(key)?.colorStringForPlatform(platform) {
                 code += "\tstatic let \(key.camelCaseString) = "
                 code += colorString + "\n"
             }
@@ -50,11 +50,24 @@ extension ColorList: CodeGeneratorType {
 }
 
 private extension NSColor {
-    var UIColorString: String? {
-        if let srgbColor = colorUsingColorSpace(NSColorSpace.sRGBColorSpace()) {
+    func colorStringForPlatform(platform: Platform) -> String? {
+        let colorSpace: NSColorSpace = {
+            switch platform {
+            case .iOS: return NSColorSpace.sRGBColorSpace()
+            case .OSX: return NSColorSpace.deviceRGBColorSpace()
+            }
+        }()
+        if let color = colorUsingColorSpace(colorSpace) {
+            let colorFormat: String = {
+                switch platform {
+                case .iOS: return "UIColor(red: %.3f, green: %.3f, blue: %.3f, alpha: %.3f)"
+                case .OSX: return "NSColor(deviceRed: %.3f, green: %.3f, blue: %.3f, alpha: %.3f)"
+                }
+            }()
+            
             var components = [CGFloat](count: 4, repeatedValue: 0)
-            srgbColor.getComponents(&components)
-            return String(format: "UIColor(red: %.3f, green: %.3f, blue: %.3f, alpha: %.3f)", arguments: components.map { $0.native })
+            color.getComponents(&components)
+            return String(format: colorFormat, arguments: components.map { $0.native })
         }
         return nil
     }
