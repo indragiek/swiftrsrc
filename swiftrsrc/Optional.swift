@@ -15,3 +15,13 @@ extension Optional {
         }
     }
 }
+
+func mapSome<S: SequenceType, T>(source: S, transform: S.Generator.Element -> T?) -> [T] {
+    return reduce(source, []) { (var collection, element) in
+        if let x = transform(element) {
+            collection.append(x)
+            return collection
+        }
+        return collection
+    }
+}
