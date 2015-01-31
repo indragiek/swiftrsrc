@@ -18,7 +18,7 @@ struct ColorList {
         if let list = NSColorList(name: URL.fileName!, fromFile: URL.path) {
             self.list = list
             self.URL = URL
-            self.name = list.name!
+            self.name = list.name! + "ColorList"
         } else {
             return nil
         }

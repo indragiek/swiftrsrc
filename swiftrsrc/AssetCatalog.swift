@@ -25,7 +25,7 @@ struct AssetCatalog {
                 return ext == nil || countElements(ext!) == 0 || isValidImageSet(tree: node)
             }
             self.URL = URL
-            self.name = URL.fileName!
+            self.name = URL.fileName! + "Catalog"
         } else {
             return nil
         }

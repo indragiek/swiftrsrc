@@ -18,7 +18,7 @@ struct Storyboard {
         if let document = NSXMLDocument(contentsOfURL: URL, options: .allZeros, error: error) {
             self.document = document
             self.URL = URL
-            self.name = URL.fileName!
+            self.name = URL.fileName! + "Storyboard"
         } else {
             return nil
         }
