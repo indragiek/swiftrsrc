@@ -20,6 +20,7 @@
 		72C478221A7D82E900D06B66 /* HelpCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72C4781D1A7D82E900D06B66 /* HelpCommand.swift */; };
 		72C478231A7D82E900D06B66 /* Option.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72C4781E1A7D82E900D06B66 /* Option.swift */; };
 		72C478261A7D833600D06B66 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72C478251A7D833600D06B66 /* Result.swift */; };
+		72C4782D1A7D8B1600D06B66 /* Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72C4782C1A7D8B1600D06B66 /* Platform.swift */; };
 		72F112951A761EBA002DA544 /* CodeGeneratorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72F112941A761EBA002DA544 /* CodeGeneratorType.swift */; };
 		72FAC0A11A7971A400D25200 /* ColorList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72FAC0A01A7971A400D25200 /* ColorList.swift */; };
 		72FAC0A31A7971F200D25200 /* NSURLExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72FAC0A21A7971F200D25200 /* NSURLExtension.swift */; };
@@ -53,6 +54,7 @@
 		72C4781D1A7D82E900D06B66 /* HelpCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HelpCommand.swift; path = External/Commandant/Commandant/HelpCommand.swift; sourceTree = "<group>"; };
 		72C4781E1A7D82E900D06B66 /* Option.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Option.swift; path = External/Commandant/Commandant/Option.swift; sourceTree = "<group>"; };
 		72C478251A7D833600D06B66 /* Result.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Result.swift; path = External/Commandant/Carthage/Checkouts/LlamaKit/LlamaKit/Result.swift; sourceTree = "<group>"; };
+		72C4782C1A7D8B1600D06B66 /* Platform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Platform.swift; sourceTree = "<group>"; };
 		72F112941A761EBA002DA544 /* CodeGeneratorType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodeGeneratorType.swift; sourceTree = "<group>"; };
 		72FAC0A01A7971A400D25200 /* ColorList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorList.swift; sourceTree = "<group>"; };
 		72FAC0A21A7971F200D25200 /* NSURLExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSURLExtension.swift; sourceTree = "<group>"; };
@@ -89,16 +91,10 @@
 		725264821A76097B008CAFD7 /* swiftrsrc */ = {
 			isa = PBXGroup;
 			children = (
+				72C4782B1A7D866100D06B66 /* Core */,
+				72C478291A7D863F00D06B66 /* Extensions */,
+				72C478281A7D863200D06B66 /* Code Generators */,
 				725264831A76097B008CAFD7 /* main.swift */,
-				7252648A1A761075008CAFD7 /* AssetCatalog.swift */,
-				72F112941A761EBA002DA544 /* CodeGeneratorType.swift */,
-				72FAC0A01A7971A400D25200 /* ColorList.swift */,
-				726E16B31A77F35B00400E7C /* FSTree.swift */,
-				72807E521A794BB30066BAAE /* Optional.swift */,
-				72807E501A79438F0066BAAE /* SequenceOperations.swift */,
-				7267FDF81A78AF83003F173B /* StringExtension.swift */,
-				72FAC0A21A7971F200D25200 /* NSURLExtension.swift */,
-				7252C7801A7A9E8500CB6DD4 /* Storyboard.swift */,
 			);
 			path = swiftrsrc;
 			sourceTree = "<group>";
@@ -131,6 +127,37 @@
 				72C478181A7D82C300D06B66 /* Commandant */,
 			);
 			name = External;
+			sourceTree = "<group>";
+		};
+		72C478281A7D863200D06B66 /* Code Generators */ = {
+			isa = PBXGroup;
+			children = (
+				72C4782C1A7D8B1600D06B66 /* Platform.swift */,
+				72F112941A761EBA002DA544 /* CodeGeneratorType.swift */,
+				7252648A1A761075008CAFD7 /* AssetCatalog.swift */,
+				72FAC0A01A7971A400D25200 /* ColorList.swift */,
+				7252C7801A7A9E8500CB6DD4 /* Storyboard.swift */,
+			);
+			name = "Code Generators";
+			sourceTree = "<group>";
+		};
+		72C478291A7D863F00D06B66 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				72807E501A79438F0066BAAE /* SequenceOperations.swift */,
+				7267FDF81A78AF83003F173B /* StringExtension.swift */,
+				72FAC0A21A7971F200D25200 /* NSURLExtension.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
+		72C4782B1A7D866100D06B66 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				726E16B31A77F35B00400E7C /* FSTree.swift */,
+				72807E521A794BB30066BAAE /* Optional.swift */,
+			);
+			name = Core;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -192,6 +219,7 @@
 				72FAC0A11A7971A400D25200 /* ColorList.swift in Sources */,
 				7252C7811A7A9E8500CB6DD4 /* Storyboard.swift in Sources */,
 				72807E511A79438F0066BAAE /* SequenceOperations.swift in Sources */,
+				72C4782D1A7D8B1600D06B66 /* Platform.swift in Sources */,
 				72C4781F1A7D82E900D06B66 /* ArgumentParser.swift in Sources */,
 				7252648B1A761075008CAFD7 /* AssetCatalog.swift in Sources */,
 				7267FDF91A78AF83003F173B /* StringExtension.swift in Sources */,
