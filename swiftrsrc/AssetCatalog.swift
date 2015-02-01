@@ -70,7 +70,7 @@ extension AssetCatalog: Printable {
 // MARK: CodeGeneratorType
 
 extension AssetCatalog: CodeGeneratorType {
-    func generateCode(#platform: Platform) -> String {
+    func generateCodeForPlatform(platform: Platform) -> String {
         return _generateCode(platform, tree, 0)
     }
 }

@@ -48,7 +48,7 @@ extension ColorList: Printable {
 // MARK: CodeGeneratorType
 
 extension ColorList: CodeGeneratorType {
-    func generateCode(#platform: Platform) -> String {
+    func generateCodeForPlatform(platform: Platform) -> String {
         var code = "struct \(name.camelCaseString) {\n"
         for key in list.allKeys as [String] {
             if let colorString = list.colorWithKey(key)?.colorStringForPlatform(platform) {

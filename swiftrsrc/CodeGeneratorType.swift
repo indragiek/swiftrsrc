@@ -9,5 +9,5 @@
 /// A type that can generate Swift source code
 protocol CodeGeneratorType {
     var name: String { get }
-    func generateCode(#platform: Platform) -> String
+    func generateCodeForPlatform(platform: Platform) -> String
 }

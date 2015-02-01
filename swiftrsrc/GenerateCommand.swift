@@ -81,7 +81,7 @@ struct GenerateCommand: CommandType {
         return GenerateOptions.evaluate(mode).flatMap { options in
             return generatorForPath(options.inputPath).flatMap { generator in
                 outputURLForPath(options.outputPath, generator.name + ".swift").flatMap {
-                    let src = SourceFileHeader + generator.generateCode(platform: options.platform) + "\n"
+                    let src = SourceFileHeader + generator.generateCodeForPlatform(options.platform) + "\n"
                     return src.writeToURL($0, atomically: true, encoding: NSUTF8StringEncoding)
                 }
             }
