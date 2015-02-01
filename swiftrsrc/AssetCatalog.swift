@@ -9,6 +9,7 @@
 import Foundation
 
 private let ImagesetFileExtension = "imageset"
+private let NameSuffix = "Catalog"
 
 /// Xcode asset catalog (*.xcassets)
 struct AssetCatalog {
@@ -25,7 +26,7 @@ struct AssetCatalog {
                 return ext == nil || countElements(ext!) == 0 || isValidImageSet(tree: node)
             }
             self.URL = URL
-            self.name = URL.fileName! + "Catalog"
+            self.name = URL.fileName! + NameSuffix
         } else {
             return nil
         }
@@ -89,7 +90,8 @@ private func _generateCode(platform: Platform, tree: FSTree, level: Int) -> Stri
     if tree.URL.pathExtension == ImagesetFileExtension {
         return indentNewline("static var \(camelCaseName): \(imageClass) { return \(imageClass)(named: \"\(name)\")! }")
     } else {
-        var code = indentNewline("struct \(camelCaseName) {")
+        let name = level == 0 ? (camelCaseName + NameSuffix) : camelCaseName
+        var code = indentNewline("struct \(name) {")
         code += reduce(tree.children, "", { $0 + _generateCode(platform, $1, level + 1) })
         code += indentNewline("}")
         return code
