@@ -14,6 +14,7 @@
 		726E16B41A77F35B00400E7C /* FSTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 726E16B31A77F35B00400E7C /* FSTree.swift */; };
 		72807E511A79438F0066BAAE /* SequenceOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72807E501A79438F0066BAAE /* SequenceOperations.swift */; };
 		72807E531A794BB30066BAAE /* Optional.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72807E521A794BB30066BAAE /* Optional.swift */; };
+		7295AFEA1A7D934800451A1D /* GenerateCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7295AFE91A7D934800451A1D /* GenerateCommand.swift */; };
 		72C4781F1A7D82E900D06B66 /* ArgumentParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72C478191A7D82E900D06B66 /* ArgumentParser.swift */; };
 		72C478201A7D82E900D06B66 /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72C4781A1A7D82E900D06B66 /* Command.swift */; };
 		72C478211A7D82E900D06B66 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72C4781C1A7D82E900D06B66 /* Errors.swift */; };
@@ -47,6 +48,7 @@
 		726E16B31A77F35B00400E7C /* FSTree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FSTree.swift; sourceTree = "<group>"; };
 		72807E501A79438F0066BAAE /* SequenceOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SequenceOperations.swift; sourceTree = "<group>"; };
 		72807E521A794BB30066BAAE /* Optional.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Optional.swift; sourceTree = "<group>"; };
+		7295AFE91A7D934800451A1D /* GenerateCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenerateCommand.swift; sourceTree = "<group>"; };
 		72C478191A7D82E900D06B66 /* ArgumentParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArgumentParser.swift; path = External/Commandant/Commandant/ArgumentParser.swift; sourceTree = "<group>"; };
 		72C4781A1A7D82E900D06B66 /* Command.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Command.swift; path = External/Commandant/Commandant/Command.swift; sourceTree = "<group>"; };
 		72C4781B1A7D82E900D06B66 /* Commandant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Commandant.h; path = External/Commandant/Commandant/Commandant.h; sourceTree = "<group>"; };
@@ -94,9 +96,18 @@
 				72C4782B1A7D866100D06B66 /* Core */,
 				72C478291A7D863F00D06B66 /* Extensions */,
 				72C478281A7D863200D06B66 /* Code Generators */,
+				7295AFE81A7D933D00451A1D /* Commands */,
 				725264831A76097B008CAFD7 /* main.swift */,
 			);
 			path = swiftrsrc;
+			sourceTree = "<group>";
+		};
+		7295AFE81A7D933D00451A1D /* Commands */ = {
+			isa = PBXGroup;
+			children = (
+				7295AFE91A7D934800451A1D /* GenerateCommand.swift */,
+			);
+			name = Commands;
 			sourceTree = "<group>";
 		};
 		72C478181A7D82C300D06B66 /* Commandant */ = {
@@ -132,7 +143,6 @@
 		72C478281A7D863200D06B66 /* Code Generators */ = {
 			isa = PBXGroup;
 			children = (
-				72C4782C1A7D8B1600D06B66 /* Platform.swift */,
 				72F112941A761EBA002DA544 /* CodeGeneratorType.swift */,
 				7252648A1A761075008CAFD7 /* AssetCatalog.swift */,
 				72FAC0A01A7971A400D25200 /* ColorList.swift */,
@@ -156,6 +166,7 @@
 			children = (
 				726E16B31A77F35B00400E7C /* FSTree.swift */,
 				72807E521A794BB30066BAAE /* Optional.swift */,
+				72C4782C1A7D8B1600D06B66 /* Platform.swift */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -218,6 +229,7 @@
 			files = (
 				72FAC0A11A7971A400D25200 /* ColorList.swift in Sources */,
 				7252C7811A7A9E8500CB6DD4 /* Storyboard.swift in Sources */,
+				7295AFEA1A7D934800451A1D /* GenerateCommand.swift in Sources */,
 				72807E511A79438F0066BAAE /* SequenceOperations.swift in Sources */,
 				72C4782D1A7D8B1600D06B66 /* Platform.swift in Sources */,
 				72C4781F1A7D82E900D06B66 /* ArgumentParser.swift in Sources */,

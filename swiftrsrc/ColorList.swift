@@ -10,16 +10,28 @@ import Cocoa
 
 /// Color list loaded from a *.clr file
 struct ColorList {
+    static let ErrorDomain = "ColorListErrorDomain"
+    enum ErrorCode: Int {
+        case UnableToOpen = 1
+    }
+    
     let URL: NSURL
     let name: String
     private let list: NSColorList
     
-    init?(URL: NSURL) {
+    init?(URL: NSURL, error: NSErrorPointer) {
         if let list = NSColorList(name: URL.fileName!, fromFile: URL.path) {
             self.list = list
             self.URL = URL
             self.name = list.name! + "ColorList"
         } else {
+            if error != nil {
+                error.memory = NSError(
+                    domain: ColorList.ErrorDomain,
+                    code: ErrorCode.UnableToOpen.rawValue,
+                    userInfo: [NSLocalizedDescriptionKey: "Unable to open color list at URL \(URL)"]
+                )
+            }
             return nil
         }
     }

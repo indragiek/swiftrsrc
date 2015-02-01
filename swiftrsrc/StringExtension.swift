@@ -41,4 +41,13 @@ extension String {
         let rest = substringFromIndex(index)
         return capitalized + rest
     }
+    
+    func writeToURL(URL: NSURL, atomically: Bool, encoding: NSStringEncoding) -> Result<()> {
+        var error: NSError?
+        if writeToURL(URL, atomically: atomically, encoding: encoding, error: &error) {
+            return success(())
+        } else {
+            return failure(error!)
+        }
+    }
 }

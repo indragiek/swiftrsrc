@@ -16,3 +16,11 @@ extension Platform: Printable {
         return rawValue
     }
 }
+
+extension Platform: ArgumentType {
+    static let name = "platform"
+    
+    static func fromString(string: String) -> Platform? {
+        return Platform(rawValue: string)
+    }
+}
