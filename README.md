@@ -11,7 +11,7 @@ If you want to compile from source, the project uses [Carthage](https://github.c
 
 ### Usage
 
-```
+```swift
 swiftrsrc generate [--platform osx|ios] input_path output_path
 ```
 
@@ -28,7 +28,7 @@ output path to write the generated code to. If a directory path is specified, th
 
 The generated code for asset catalogs only includes image sets, and purposely omits app icons and launch images (as these are not typically referred to programatically). If you put image sets inside folders, a corresponding nested struct will be created for the folder. In the example below, `Posts` and `Main` are folders inside `Images.xcassets`:
 
-```
+```swift
 struct ImagesCatalog {
 	struct Posts {
 		static var Star: UIImage { return UIImage(named: "Star")! }
@@ -47,7 +47,7 @@ Note that the properties are computed rather than assigned directly in order to 
 
 The generated code for storyboards contains constants for storyboard identifiers, reuse identifiers, and segue identifiers:
 
-```
+```swift
 struct MainStoryboard {
 	struct StoryboardIdentifiers
 		static let MainViewController = "MainViewController"
@@ -66,7 +66,7 @@ struct MainStoryboard {
 
 Color lists can be created and edited visually by using the OS X color picker or programmatically using the [`NSColorList`](https://developer.apple.com/library/mac/documentation/Cocoa/Reference/ApplicationKit/Classes/NSColorList_Class/index.html) class. `swiftrsrc` automatically handles the task of converting colors to the appropriate color space depending on the platform that the code is being generated for.
 
-```
+```swift
 struct AppLightColorList {
 	static let Blue = UIColor(red: 0.045, green: 0.549, blue: 0.995, alpha: 1.000)
 	static let Red = UIColor(red: 0.998, green: 0.261, blue: 0.321, alpha: 1.000)
