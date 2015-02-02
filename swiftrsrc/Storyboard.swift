@@ -57,7 +57,7 @@ extension Storyboard: CodeGeneratorType {
             ("SegueIdentifiers", segueIdentifiers)
         ]
         for (name, identifiers) in categories {
-            code += "\tstruct \(name)\n"
+            code += "\tstruct \(name) {\n"
             for id in identifiers {
                 code += "\t\tstatic let \(id.camelCaseString) = \"\(id)\"\n"
             }
