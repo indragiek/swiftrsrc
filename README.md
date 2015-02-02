@@ -49,14 +49,14 @@ The generated code for storyboards contains constants for storyboard identifiers
 
 ```swift
 struct MainStoryboard {
-	struct StoryboardIdentifiers
+	struct StoryboardIdentifiers {
 		static let MainViewController = "MainViewController"
 	}
-	struct ReuseIdentifiers
+	struct ReuseIdentifiers {
 		static let PostTableViewCell = "PostTableViewCell"
 		static let CommentTableViewCell = "CommentTableViewCell"
 	}
-	struct SegueIdentifiers
+	struct SegueIdentifiers {
 		static let MainToDetail = "MainToDetail"
 	}
 }
