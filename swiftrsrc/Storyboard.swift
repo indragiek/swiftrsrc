@@ -50,16 +50,21 @@ extension Storyboard: CodeGeneratorType {
         let reuseIdentifiers = stringsForXPath("//@reuseIdentifier")
         let segueIdentifiers = stringsForXPath("//segue/@identifier")
         
+        let siSet = NSSet(array: storyboardIdentifiers)
+        let riSet = NSSet(array: reuseIdentifiers)
+        let segueiSet = NSSet(array: segueIdentifiers)
+        
         var code = "struct \(name.camelCaseString) {\n"
         let categories = [
-            ("StoryboardIdentifiers", storyboardIdentifiers),
-            ("ReuseIdentifiers", reuseIdentifiers),
-            ("SegueIdentifiers", segueIdentifiers)
+            ("StoryboardIdentifiers", siSet),
+            ("ReuseIdentifiers", riSet),
+            ("SegueIdentifiers", segueiSet)
         ]
         for (name, identifiers) in categories {
             code += "\tstruct \(name) {\n"
             for id in identifiers {
-                code += "\t\tstatic let \(id.camelCaseString) = \"\(id)\"\n"
+                let identifier = id as String
+                code += "\t\tstatic let \(identifier.camelCaseString) = \"\(id)\"\n"
             }
             code += "\t}\n"
         }
