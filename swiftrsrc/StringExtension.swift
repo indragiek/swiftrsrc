@@ -11,9 +11,9 @@ import Foundation
 extension String {
     func indent(level: Int) -> String {
         let lines = componentsSeparatedByString("\n")
-        let indentedLines: [String] = lines.map { (var line) in
+        let indentedLines: [String] = lines.map { line in
             var indent = ""
-            for i in 0..<level { indent += "\t" }
+            for _ in 0..<level { indent += "\t" }
             return indent + line
         }
         return "\n".join(indentedLines)
