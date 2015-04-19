@@ -23,7 +23,7 @@ struct AssetCatalog {
             self.tree = tree.filter { node in
                 if node.isLeaf { return false }
                 let ext = node.URL.pathExtension
-                return ext == nil || countElements(ext!) == 0 || isValidImageSet(tree: node)
+                return ext == nil || count(ext!) == 0 || isValidImageSet(tree: node)
             }
             self.URL = URL
             self.name = URL.fileName! + NameSuffix

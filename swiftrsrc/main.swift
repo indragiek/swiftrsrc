@@ -8,11 +8,15 @@
 
 import Foundation
 
-let registry = CommandRegistry()
-registry.register(GenerateCommand())
-let helpCommand = HelpCommand(registry: registry)
-registry.register(helpCommand)
-
-registry.main(defaultCommand: helpCommand) { error in
-    fputs("\(error.localizedDescription)\n", stderr); return
+func main() {
+    let registry = CommandRegistry()
+    registry.register(GenerateCommand())
+    let helpCommand = HelpCommand(registry: registry)
+    registry.register(helpCommand)
+    
+    registry.main(defaultCommand: helpCommand) { error in
+        fputs("\(error.toNSError().localizedDescription)\n", stderr)
+    }
 }
+
+main()

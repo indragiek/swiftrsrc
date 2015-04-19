@@ -24,7 +24,7 @@ struct Errors {
     )
 }
 
-private func generatorForPath(path: String) -> Result<CodeGeneratorType> {
+private func generatorForPath(path: String) -> Result<CodeGeneratorType, NSError> {
     var error: NSError?
     if let URL = NSURL.fileURLWithPath(path) {
         if let pathExtension = URL.pathExtension {
@@ -48,7 +48,7 @@ private func generatorForPath(path: String) -> Result<CodeGeneratorType> {
     return failure(error ?? Errors.InvalidInputPath)
 }
 
-private func outputURLForPath(path: String, fileName: String) -> Result<NSURL> {
+private func outputURLForPath(path: String, fileName: String) -> Result<NSURL, NSError> {
     if let URL = NSURL(fileURLWithPath: path) {
         var isDirectory: ObjCBool = false
         if NSFileManager.defaultManager().fileExistsAtPath(path, isDirectory: &isDirectory) {
@@ -77,13 +77,19 @@ struct GenerateCommand: CommandType {
     let verb = "generate"
     let function = "Generate Swift source code"
     
-    func run(mode: CommandMode) -> Result<()> {
+    func run(mode: CommandMode) -> Result<(), CommandantError> {
         return GenerateOptions.evaluate(mode).flatMap { options in
-            return generatorForPath(options.inputPath).flatMap { generator in
+            let result = generatorForPath(options.inputPath).flatMap { generator -> Result<(), NSError> in
                 outputURLForPath(options.outputPath, generator.name + ".swift").flatMap {
                     let src = SourceFileHeader + generator.generateCodeForPlatform(options.platform) + "\n"
                     return src.writeToURL($0, atomically: true, encoding: NSUTF8StringEncoding)
                 }
+            }
+            switch result {
+            case .Success:
+                return success(())
+            case .Failure(let boxedError):
+                return failure(CommandantError.UsageError(description: boxedError.unbox.localizedDescription))
             }
         }
     }
@@ -98,7 +104,7 @@ struct GenerateOptions: OptionsType {
         return GenerateOptions(platform: platform, inputPath: inputPath, outputPath: outputPath)
     }
     
-    static func evaluate(m: CommandMode) -> Result<GenerateOptions> {
+    static func evaluate(m: CommandMode) -> Result<GenerateOptions, CommandantError> {
         return create
             <*> m <| Option(key: "platform", defaultValue: Platform.iOS, usage: "platform to generate code for. Must be either \"ios\" or \"osx\"")
             <*> m <| Option(usage: "input path to generate code from. " + PathRequirements)

@@ -50,7 +50,7 @@ extension ColorList: Printable {
 extension ColorList: CodeGeneratorType {
     func generateCodeForPlatform(platform: Platform) -> String {
         var code = "struct \(name.camelCaseString) {\n"
-        for key in list.allKeys as [String] {
+        for key in list.allKeys as! [String] {
             if let colorString = list.colorWithKey(key)?.colorStringForPlatform(platform) {
                 code += "\tstatic let \(key.camelCaseString) = "
                 code += colorString + "\n"

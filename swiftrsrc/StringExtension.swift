@@ -34,7 +34,7 @@ extension String {
     }
     
     private var firstLetterCapitalizedString: String {
-        if countElements(self) == 0 { return self }
+        if count(self) == 0 { return self }
         
         let index = advance(startIndex, 1)
         let capitalized = substringToIndex(index).uppercaseString
@@ -42,7 +42,7 @@ extension String {
         return capitalized + rest
     }
     
-    func writeToURL(URL: NSURL, atomically: Bool, encoding: NSStringEncoding) -> Result<()> {
+    func writeToURL(URL: NSURL, atomically: Bool, encoding: NSStringEncoding) -> Result<(), NSError> {
         var error: NSError?
         if writeToURL(URL, atomically: atomically, encoding: encoding, error: &error) {
             return success(())

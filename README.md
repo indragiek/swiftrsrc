@@ -7,8 +7,6 @@
 
 The simplest way to install `swiftrsrc` is to download the latest binary from the [Releases](https://github.com/indragiek/swiftrsrc/releases) page.
 
-If you want to compile from source, the project uses [Carthage](https://github.com/Carthage/Carthage) for dependency manangement, so you will need to clone the project and run `carthage checkout` to fetch the dependencies before building.
-
 ### Usage
 
 ```swift

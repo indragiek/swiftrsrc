@@ -38,7 +38,7 @@ extension Storyboard: Printable {
 extension Storyboard: CodeGeneratorType {
     func generateCodeForPlatform(platform: Platform) -> String {
         let stringsForXPath: String -> [String] = {
-            let nodes = self.document.nodesForXPath($0, error: nil) as [NSXMLNode]
+            let nodes = self.document.nodesForXPath($0, error: nil) as! [NSXMLNode]
             return mapSome(nodes, { $0.stringValue })
         }
         

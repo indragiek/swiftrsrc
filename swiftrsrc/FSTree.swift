@@ -11,7 +11,7 @@ import Foundation
 /// Represents a filesystem tree
 struct FSTree {
     let URL: NSURL
-    let children = [FSTree]()
+    let children: [FSTree]
     
     /// Leaf in the strict sense -- it is possible for a directory to
     /// be a leaf node if it is empty.
@@ -28,17 +28,23 @@ struct FSTree {
             let fm = NSFileManager.defaultManager()
             if let contents = fm.contentsOfDirectoryAtURL(URL, includingPropertiesForKeys: [NSURLIsDirectoryKey], options: nil, error: &contentsError) as? [NSURL] {
                 self.children = mapSome(contents, { FSTree(URL: $0, error: nil) })
-            } else if error != nil {
-                error.memory = contentsError
+            } else {
+                self.children = []
+                if (error != nil) {
+                    error.memory = contentsError
+                }
                 return nil
             }
-        } else if error != nil {
-            error.memory = resourceError
+        } else {
+            self.children = []
+            if (error != nil) {
+                error.memory = resourceError
+            }
             return nil
         }
     }
     
-    private init(URL: NSURL, children: [FSTree]) {
+    private init(URL: NSURL, children: [FSTree] = []) {
         self.URL = URL
         self.children = children
     }
@@ -76,7 +82,7 @@ private extension NSURL {
     func isDirectory(#error: NSErrorPointer) -> Bool? {
         var isDirectory: AnyObject?
         if getResourceValue(&isDirectory, forKey: NSURLIsDirectoryKey, error: error) {
-            return (isDirectory as NSNumber).boolValue
+            return (isDirectory as! NSNumber).boolValue
         }
         return nil
     }
