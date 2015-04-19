@@ -24,19 +24,21 @@ struct FSTree {
         self.URL = URL
         var resourceError: NSError?
         if let isDirectory = URL.isDirectory(error: &resourceError) {
-            var contentsError: NSError?
-            let fm = NSFileManager.defaultManager()
-            if let contents = fm.contentsOfDirectoryAtURL(URL, includingPropertiesForKeys: [NSURLIsDirectoryKey], options: nil, error: &contentsError) as? [NSURL] {
-                self.children = mapSome(contents, { FSTree(URL: $0, error: nil) })
+            if isDirectory {
+                var contentsError: NSError?
+                let fm = NSFileManager.defaultManager()
+                if let contents = fm.contentsOfDirectoryAtURL(URL, includingPropertiesForKeys: [NSURLIsDirectoryKey], options: nil, error: &contentsError) as? [NSURL] {
+                    self.children = mapSome(contents, { FSTree(URL: $0, error: nil) })
+                } else {
+                    if (error != nil) {
+                        error.memory = contentsError
+                    }
+                    return nil
+                }
             } else {
                 self.children = []
-                if (error != nil) {
-                    error.memory = contentsError
-                }
-                return nil
             }
         } else {
-            self.children = []
             if (error != nil) {
                 error.memory = resourceError
             }
