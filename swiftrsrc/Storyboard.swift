@@ -46,9 +46,9 @@ extension Storyboard: CodeGeneratorType {
             return "static let \($0.camelCaseString) = \"\($0)\"\n"
         }
         
-        let storyboardIdentifiers = stringsForXPath("//@storyboardIdentifier")
-        let reuseIdentifiers = stringsForXPath("//@reuseIdentifier")
-        let segueIdentifiers = stringsForXPath("//segue/@identifier")
+        let storyboardIdentifiers = Set(stringsForXPath("//@storyboardIdentifier"))
+        let reuseIdentifiers = Set(stringsForXPath("//@reuseIdentifier"))
+        let segueIdentifiers = Set(stringsForXPath("//segue/@identifier"))
         
         var code = "struct \(name.camelCaseString) {\n"
         let categories = [
