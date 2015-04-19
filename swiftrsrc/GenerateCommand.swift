@@ -67,6 +67,18 @@ private func outputURLForPath(path: String, fileName: String) -> Result<NSURL, N
     }
 }
 
+private func generateSourceFileContents(generator: CodeGeneratorType, platform: Platform) -> String {
+    var src = SourceFileHeader
+    switch platform {
+    case .iOS:
+        src += "import UIKit"
+    case .OSX:
+        src += "import Cocoa"
+    }
+    src += "\n\n" + generator.generateCodeForPlatform(platform) + "\n"
+    return src
+}
+
 struct GenerateCommand: CommandType {
     static let ErrorDomain = "GenerateCommandErrorDomain"
     enum ErrorCode: Int {
@@ -81,7 +93,7 @@ struct GenerateCommand: CommandType {
         return GenerateOptions.evaluate(mode).flatMap { options in
             let result = generatorForPath(options.inputPath).flatMap { generator -> Result<(), NSError> in
                 outputURLForPath(options.outputPath, generator.name + ".swift").flatMap {
-                    let src = SourceFileHeader + generator.generateCodeForPlatform(options.platform) + "\n"
+                    let src = generateSourceFileContents(generator, options.platform)
                     return src.writeToURL($0, atomically: true, encoding: NSUTF8StringEncoding)
                 }
             }
