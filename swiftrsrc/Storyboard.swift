@@ -45,10 +45,14 @@ extension Storyboard: CodeGeneratorType {
         let constantDeclaration: String -> String = {
             return "static let \($0.camelCaseString) = \"\($0)\"\n"
         }
+
+        func uniqueSorted(array: [String]) -> [String] {
+            return Array(Set(array)).sorted(<)
+        }
         
-        let storyboardIdentifiers = Set(stringsForXPath("//@storyboardIdentifier"))
-        let reuseIdentifiers = Set(stringsForXPath("//@reuseIdentifier"))
-        let segueIdentifiers = Set(stringsForXPath("//segue/@identifier"))
+        let storyboardIdentifiers = uniqueSorted(stringsForXPath("//@storyboardIdentifier"))
+        let reuseIdentifiers = uniqueSorted(stringsForXPath("//@reuseIdentifier"))
+        let segueIdentifiers = uniqueSorted(stringsForXPath("//segue/@identifier"))
         
         var code = "struct \(name.camelCaseString) {\n"
         let categories = [
