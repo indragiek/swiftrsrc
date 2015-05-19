@@ -11,6 +11,8 @@ import Foundation
 func main() {
     let registry = CommandRegistry()
     registry.register(GenerateCommand())
+    registry.register(VersionCommand(version: "1.1"))
+
     let helpCommand = HelpCommand(registry: registry)
     registry.register(helpCommand)
     
