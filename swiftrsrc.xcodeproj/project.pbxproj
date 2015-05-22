@@ -25,6 +25,7 @@
 		72F112951A761EBA002DA544 /* CodeGeneratorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72F112941A761EBA002DA544 /* CodeGeneratorType.swift */; };
 		72FAC0A11A7971A400D25200 /* ColorList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72FAC0A01A7971A400D25200 /* ColorList.swift */; };
 		72FAC0A31A7971F200D25200 /* NSURLExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72FAC0A21A7971F200D25200 /* NSURLExtension.swift */; };
+		CDC6E8B11B0B185B00489E1A /* VersionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC6E8B01B0B185B00489E1A /* VersionCommand.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -59,6 +60,7 @@
 		72F112941A761EBA002DA544 /* CodeGeneratorType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodeGeneratorType.swift; sourceTree = "<group>"; };
 		72FAC0A01A7971A400D25200 /* ColorList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorList.swift; sourceTree = "<group>"; };
 		72FAC0A21A7971F200D25200 /* NSURLExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSURLExtension.swift; sourceTree = "<group>"; };
+		CDC6E8B01B0B185B00489E1A /* VersionCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VersionCommand.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +107,7 @@
 			isa = PBXGroup;
 			children = (
 				7295AFE91A7D934800451A1D /* GenerateCommand.swift */,
+				CDC6E8B01B0B185B00489E1A /* VersionCommand.swift */,
 			);
 			name = Commands;
 			sourceTree = "<group>";
@@ -232,6 +235,7 @@
 				72A057E51AE33B15009049DF /* Errors.swift in Sources */,
 				72807E511A79438F0066BAAE /* SequenceOperations.swift in Sources */,
 				72A057E61AE33B15009049DF /* HelpCommand.swift in Sources */,
+				CDC6E8B11B0B185B00489E1A /* VersionCommand.swift in Sources */,
 				72C4782D1A7D8B1600D06B66 /* Platform.swift in Sources */,
 				7252648B1A761075008CAFD7 /* AssetCatalog.swift in Sources */,
 				7267FDF91A78AF83003F173B /* StringExtension.swift in Sources */,
