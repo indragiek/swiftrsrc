@@ -53,13 +53,21 @@ extension Storyboard: CodeGeneratorType {
         let storyboardIdentifiers = uniqueSorted(stringsForXPath("//@storyboardIdentifier"))
         let reuseIdentifiers = uniqueSorted(stringsForXPath("//@reuseIdentifier"))
         let segueIdentifiers = uniqueSorted(stringsForXPath("//segue/@identifier"))
-        
+        // For WatchKit Storyboards
+        let controllerIdentifiers = uniqueSorted(stringsForXPath("//controller/@identifier"))
+        let rowControllerIdentifiers = uniqueSorted(stringsForXPath("//tableRow/@identifier"))
+
         var code = "struct \(name.camelCaseString) {\n"
+
+        // Skip empty category
         let categories = [
             ("StoryboardIdentifiers", storyboardIdentifiers),
             ("ReuseIdentifiers", reuseIdentifiers),
-            ("SegueIdentifiers", segueIdentifiers)
-        ]
+            ("SegueIdentifiers", segueIdentifiers),
+            ("ControllerIdentifiers", controllerIdentifiers),
+            ("RowControllerIdentifiers", rowControllerIdentifiers),
+        ].filter { !$0.1.isEmpty }
+
         for (name, identifiers) in categories {
             code += "\tstruct \(name) {\n"
             for id in identifiers {
@@ -67,6 +75,7 @@ extension Storyboard: CodeGeneratorType {
             }
             code += "\t}\n"
         }
+
         code += "}"
         return code
     }
