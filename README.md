@@ -10,7 +10,7 @@ The simplest way to install `swiftrsrc` is to download the latest binary from th
 ### Usage
 
 ```swift
-swiftrsrc generate [--platform osx|ios] input_path output_path
+swiftrsrc generate --platform [osx|ios] input_path output_path
 ```
 
 **_[--platform ios|osx]_**  
